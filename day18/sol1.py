@@ -66,29 +66,27 @@ def split(snailfish):
   _split(snailfish)
   return split
 
-num = [[[[0,[4,5]],[0,0]],[[[4,5],[2,6]],[9,5]]], [7,[[[3,7],[4,3]],[[6,3],[8,8]]]]]
-
-NUMS = (
-  [[[0,[4,5]],[0,0]],[[[4,5],[2,6]],[9,5]]],
-  [7,[[[3,7],[4,3]],[[6,3],[8,8]]]],
-  [[2,[[0,8],[3,4]]],[[[6,7],1],[7,[1,6]]]],
-  [[[[2,4],7],[6,[0,5]]],[[[6,8],[2,8]],[[2,1],[4,5]]]],
-  [7,[5,[[3,8],[1,4]]]],
-  [[2,[2,2]],[8,[8,1]]],
-  [2,9],
-  [1,[[[9,3],9],[[9,0],[0,7]]]],
-  [[[5,[7,4]],7],1],
-  [[[[4,2],2],6],[8,7]]
-)
-
-
-sum, *NUMS = NUMS
-
-for op in NUMS:
-  num = [sum, op]
+def sum(a, b):
+  sum = [a, b]
   while True:
-    if explode(num): continue
-    if not split(num): break
-  sum = num
+    if explode(sum): continue
+    if not split(sum): break
+  return sum
 
-print(sum)
+def mag(snailfish):
+  if isinstance(snailfish, int):
+    return snailfish
+  else:
+    l, r = snailfish
+    return 3 * mag(l) + 2 * mag(r)
+
+if __name__ == '__main__':
+  res = None
+  with open('input1.txt') as inf:
+    for line in inf:
+      lst = eval(line)
+      if res is None:
+        res = lst
+      else:
+        res = sum(res, lst)
+  print(mag(res))
